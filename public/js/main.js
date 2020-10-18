@@ -1,9 +1,9 @@
 $('select').change(function(){
-    let selectedCategory = $(this).val();
+    let selectedCategoryId = $(this).val();
     $.ajax({
         type: "POST",
         url: 'createSubCategories',
-        data: {'categoryId': selectedCategory},
+        data: {'categoryId': selectedCategoryId},
         complete: function() {
             location.reload();
         }

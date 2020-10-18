@@ -11,7 +11,7 @@ class Home extends BaseController
 
 	public function index()
 	{
-		$categories = $this->categoryModel->findAll();
+		$categories = $this->prepareCategoriesData($this->categoryModel->findAll());
 		
 		return view('categories', compact('categories'));
 	}
@@ -20,12 +20,22 @@ class Home extends BaseController
 	{
 		$category = $this->categoryModel->find((int)$_POST['categoryId']);
 
-		$data = $this->prepareData($category);
+		$data = $this->prepareInsertData($category);
 
 		$this->categoryModel->insertBatch($data);
 	}
 
-	protected function prepareData(array $category): array
+	protected function prepareCategoriesData(array $categories): array
+	{
+		$result = [];
+		foreach ($categories as $category) {
+			$result[$category['sub_level']][] = $category;
+		}
+
+		return $result;
+	}
+
+	protected function prepareInsertData(array $category): array
 	{
 		$subLevel = ++$category['sub_level'];
 

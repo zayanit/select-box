@@ -19,15 +19,16 @@
     <section>
 
         <h1>Select a category from the list:</h1>
-
-        <select name='mainCategories'>
-            <option value=''>Please, Select a category</option>
-            <?php foreach($categories as $category): ?>
-                <option value="<?=$category['id']?>">
-                    <?=$category['name']?>
-                </option>
-            <?php endforeach ?>
-        </select>
+        <?php foreach($categories as $chunkedCategories): ?>
+            <select>
+                <option value=''>Please, Select a category</option>
+                <?php foreach($chunkedCategories as $category): ?>
+                    <option value="<?=$category['id']?>">
+                        <?=$category['name']?>
+                    </option>
+                <?php endforeach ?>
+            </select>
+        <?php endforeach ?>
 
     </section>
 
