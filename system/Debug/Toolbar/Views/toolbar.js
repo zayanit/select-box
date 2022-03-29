@@ -626,11 +626,12 @@ var ciDebugBar = {
 				});
 			}
 			else {
-				row.innerHTML = '<div>' + row.innerText + '</div>'
-					+ '<form data-debugbar-route-tpl="' + ciDebugBar.trimSlash(row.innerText.replace(patt, '?')) + '">'
-					+ row.innerText.replace(patt, '<input type="text" placeholder="$1">')
-					+ '<input type="submit" value="Go" style="margin-left: 4px;">'
-					+ '</form>';
+				textInner = row.innerText;
+				row.innerHTML = '<div>' + textInner + '</div>'
+				+ '<form data-debugbar-route-tpl="' + ciDebugBar.trimSlash(textInner.replace(patt, '?')) + '">'
+				+ textInner.replace(patt, '<input type="text" placeholder="$1">')
+				+ '<input type="submit" value="Go" style="margin-left: 4px;">'
+				+ '</form>';
 			}
 		}
 
