@@ -639,14 +639,20 @@ var ciDebugBar = {
 				form.setAttribute('data-debugbar-route-tpl', ciDebugBar.trimSlash(textInner.replace(patt, '?')));
 
 				// Safely add the inner text field
-				const textWithPlaceholder = textInner.replace(patt, (match, p1) => {
-					const input = document.createElement('input');
-					input.type = 'text';
-					input.placeholder = p1;
-					return input.outerHTML;
+				const fragments = textInner.split(patt);
+				fragments.forEach((fragment, index) => {
+					if (index % 2 === 0) {
+						// Add text fragment
+						const textNode = document.createTextNode(fragment);
+						form.appendChild(textNode);
+					} else {
+						// Add input field
+						const input = document.createElement('input');
+						input.type = 'text';
+						input.placeholder = fragment;
+						form.appendChild(input);
+					}
 				});
-				form.textContent = '';  // Clear any existing content
-				form.insertAdjacentHTML('beforeend', textWithPlaceholder);
 					
 				// Add the submit button
 				const submitButton = document.createElement('input');
