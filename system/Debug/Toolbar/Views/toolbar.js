@@ -639,8 +639,14 @@ var ciDebugBar = {
 				form.setAttribute('data-debugbar-route-tpl', ciDebugBar.trimSlash(textInner.replace(patt, '?')));
 
 				// Safely add the inner text field
-				const textWithPlaceholder = textInner.replace(patt, '<input type="text" placeholder="$1">');
-				form.innerHTML = textWithPlaceholder;
+				const textWithPlaceholder = textInner.replace(patt, (match, p1) => {
+					const input = document.createElement('input');
+					input.type = 'text';
+					input.placeholder = p1;
+					return input.outerHTML;
+				});
+				form.textContent = '';  // Clear any existing content
+				form.insertAdjacentHTML('beforeend', textWithPlaceholder);
 					
 				// Add the submit button
 				const submitButton = document.createElement('input');
