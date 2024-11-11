@@ -627,12 +627,32 @@ var ciDebugBar = {
 				});
 			}
 			else {
-				textInner = row.innerText;
-				row.innerHTML = '<div>' + textInner + '</div>'
-				+ '<form data-debugbar-route-tpl="' + ciDebugBar.trimSlash(textInner.replace(patt, '?')) + '">'
-				+ textInner.replace(patt, '<input type="text" placeholder="$1">')
-				+ '<input type="submit" value="Go" style="margin-left: 4px;">'
-				+ '</form>';
+				const textInner = row.innerText;  // Original text content
+				row.textContent = '';  // Clear the row to avoid direct HTML injection
+
+				// Create the outer div
+				const outerDiv = document.createElement('div');
+				outerDiv.textContent = textInner;
+
+				// Create the form with safe insertion
+				const form = document.createElement('form');
+				form.setAttribute('data-debugbar-route-tpl', ciDebugBar.trimSlash(textInner.replace(patt, '?')));
+
+				// Safely add the inner text field
+				const textWithPlaceholder = textInner.replace(patt, '<input type="text" placeholder="$1">');
+				form.innerHTML = textWithPlaceholder;
+					
+				// Add the submit button
+				const submitButton = document.createElement('input');
+				submitButton.type = 'submit';
+				submitButton.value = 'Go';
+				submitButton.style.marginLeft = '4px';
+				form.appendChild(submitButton);
+
+				// Append all elements to the row
+				row.appendChild(outerDiv);
+				row.appendChild(form);
+
 			}
 		}
 
