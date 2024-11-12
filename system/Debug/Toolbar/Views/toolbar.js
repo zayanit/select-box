@@ -612,7 +612,7 @@ var ciDebugBar = {
 	routerLink: function() {
 		var row, _location;
 		var rowGet = document.querySelectorAll('#debug-bar td[data-debugbar-route="GET"]');
-		var patt = /\((?:[^()]*|\([^()]*\))*\)/g;
+		var patt = /\((?:[^()]*|\((?:[^()]+|[^()])*\))*\)/g;
 
 
 		for (var i = 0; i < rowGet.length; i++) {
